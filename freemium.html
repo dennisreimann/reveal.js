@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Switching to Freemium</title>
+
+		<meta name="description" content="Lessons learned from changing iOctocat's pricing model">
+		<meta name="author" content="Dennis Reimann">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.min.css">
+		<link rel="stylesheet" href="css/theme/dennisreimann.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/solarized_dark.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<section>
+						<h1>Switching to Freemium</h1>
+						<p style="margin:2em 0 2em 0">Lessons Learned From<br>Changing iOctocat's Pricing Model</p>
+						<p>
+							<small>
+								CocoaHeads Bremen &nbsp; - &nbsp; December 16<sup>th</sup> 2013<br>
+								<a href="http://dennisreimann.de">Dennis Reimann</a> &nbsp; - &nbsp; <a href="http://twitter.com/dennisreimann">@dennisreimann</a>
+							</small>
+						</p>
+
+						<aside class="notes">
+						<ul>
+							<li>Introduction (Five weeks ago...)</li>
+							<li>Initial download free</li>
+							<li>Features limited to public repositories</li>
+							<li>Upgrade via in-app purchase ($9.99)</li>
+							<li>Lack of demo versions</li>
+						</ul>
+						<p>Two parts: Technical and business aspects</p>
+						<p>Does someone not know the app?</p>
+					</aside>
+					</section>
+<!--
+					<section data-transition="fade">
+						<img src="img/freemium/app-intro-01.png" class="full" alt="News and Activity Stream">
+					</section>
+
+					<section data-transition="none">
+						<img src="img/freemium/app-intro-02.png" class="full" alt="Repository view">
+					</section>
+
+					<section data-transition="none">
+						<img src="img/freemium/app-intro-03.png" class="full" alt="Profile view">
+					</section>
+ -->
+				</section>
+
+				<section>
+					<h1>Technical aspects</h1>
+				</section>
+
+				<section>
+					<h2>App Store Receipt</h2>
+					<ul>
+						<li>Updated with iOS 7</li>
+						<li>Unified receipt format, same as on OS X</li>
+						<li>Transition paid to free with in-app purchase</li>
+						<li>Supports various demo scenarios</li>
+					</ul>
+
+					<aside class="notes">
+						<p>About 95% of the Top Grossing charts</p>
+					</aside>
+				</section>
+
+				<section>
+					<img src="img/freemium/receipt-slide.png" class="full" alt="The App Store receipt">
+					<p style="margin-top:1em">
+						<small>Details in <a href="https://developer.apple.com/wwdc/videos/">WWDC 2013, Session 308</a></small>
+					</p>
+
+					<aside class="notes">
+						<ul>
+							<li>Contains information on non-consumables and auto-renewable subscriptions</li>
+							<li>Also includes volume purchase information</li>
+							<li>Time-limited demo versions</li>
+						</ul>
+					</aside>
+				</section>
+
+				<section>
+					<h2>RMStore</h2>
+					<ul>
+						<li>Lightweight wrapper for StoreKit</li>
+						<li>Blocks and Notifications instead of Delegation</li>
+						<li>Receipt verification</li>
+						<li>Purchase management</li>
+						<li>Good documentation and full test coverage</li>
+					</ul>
+
+					<aside class="notes">
+						<p>Built along Apples recommendations</p>
+					</aside>
+				</section>
+
+				<section>
+					<h2>Store setup</h2>
+					<pre><code class="objectivec" data-trim>
+// IOCAppDelegate.m
+
+- (void)setupStore {
+    self.receiptVerificator = [[RMStoreAppReceiptVerificator alloc] init];
+    self.receiptVerificator.bundleIdentifier = IOCStoreBundleIdentifier;
+    self.receiptVerificator.bundleVersion = IOCStoreBundleVersion;
+
+    [RMStore defaultStore].receiptVerificator = self.receiptVerificator;
+
+    [self setNeedsProVersionCheck];
+}
+
+- (void)setNeedsProVersionCheck {
+    self.proVersionStatus = IOCProVersionStatusUndef;
+}
+					</code></pre>
+				</section>
+
+				<section>
+					<h2>Receipt refresh</h2>
+					<pre><code class="objectivec" data-trim>
+// IOCAppDelegate.m
+
+- (void)verifyReceipt {
+    if (![self.receiptVerificator verifyAppReceipt]) {
+        [[RMStore defaultStore] refreshReceiptOnSuccess:^{
+            [self setNeedsProVersionCheck];
+        } failure:NULL];
+    }
+}
+					</code></pre>
+
+					<aside class="notes">
+						<ul>
+							<li>Fail gracefully</li>
+							<li>iCloud backup restore: Receipt not present</li>
+							<li>Receipt verificator condition violated</li>
+							<li>Think of bumping bundle version constant!</li>
+						</ul>
+					</aside>
+				</section>
+
+				<section>
+					<h2>Check on launch</h2>
+					<pre><code class="objectivec" data-trim>
+// IOCAppDelegate.m
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    // ...
+
+    [self setupStore];
+    [self verifyReceipt];
+
+    // ...
+}
+					</code></pre>
+				</section>
+
+				<section>
+					<h2>Pro version check</h2>
+					<pre><code class="objectivec" data-trim>
+// IOCAppDelegate.m
+
+- (BOOL)isProVersion {
+    if (self.proVersionStatus == IOCProVersionStatusUndef) {
+        RMAppReceipt *r = [RMAppReceipt bundleReceipt];
+
+        // see if it has been bought prior to the freemium switch,
+        // otherwise check for the pro upgrade purchase
+        BOOL boughtBeforeSwitch =
+            [IOCUtil versionBoughtBeforeSwitch:r.originalAppVersion];
+        BOOL boughtProUpgrade =
+            [r containsInAppPurchaseOfProductIdentifier:IOCProIdentifier];
+        self.proVersionStatus = boughtBeforeSwitch || boughtProUpgrade ?
+            IOCProVersionStatusTrue : IOCProVersionStatusFalse;
+    }
+    return self.proVersionStatus;
+}
+					</code></pre>
+				</section>
+
+				<section data-transition="fade">
+					<img src="img/freemium/app-upgrade-01.png" class="full" alt="Root view">
+				</section>
+
+				<section data-transition="none">
+					<img src="img/freemium/app-upgrade-02.png" class="full" alt="Upgrade view">
+				</section>
+
+				<section>
+					<h2>Upgrading</h2>
+					<pre><code class="objectivec" data-trim>
+// IOCUpgradeController.m
+
+- (IBAction)purchaseUpgrade:(id)sender {
+    [[RMStore defaultStore] addPayment:IOCStoreProUpgradeIdentifier success:^(SKPaymentTransaction *transaction) {
+        [[iOctocat sharedInstance] setNeedsProVersionCheck];
+
+        [self handleUpgradeSuccess];
+    } failure:^(SKPaymentTransaction *transaction, NSError *error) {
+        [self alertError:error.localizedDescription];
+    }];
+}
+					</code></pre>
+				</section>
+
+				<section>
+					<h2>Restoring purchases</h2>
+					<pre><code class="objectivec" data-trim>
+// IOCUpgradeController.m
+
+- (IBAction)restorePurchase:(id)sender {
+    [[RMStore defaultStore] restoreTransactionsOnSuccess:^{
+        [[iOctocat sharedInstance] setNeedsProVersionCheck];
+
+        if ([iOctocat sharedInstance].isProVersion) {
+            [self handleUpgradeSuccess];
+        } else {
+            [self alertError:NSLocalizedString(@"You have not purchased iOctocat Pro with the given Apple ID, yet.", nil)];
+        }
+    } failure:^(NSError *error) {
+        [self alertError:error.localizedDescription];
+    }];
+}
+					</code></pre>
+				</section>
+
+				<section>
+					<h2>Upgrade handling</h2>
+					<pre><code class="objectivec" data-trim>
+// Any ViewController with Upgrade references
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+
+    [[RMStore defaultStore] addStoreObserver:self];
+
+    [self updateViewDependingOnProVersionStatusAnimated:NO];
+}
+
+- (void)updateViewDependingOnProVersionStatusAnimated:(BOOL)animated {
+    UIBarButtonItem *item = nil;
+    if (![IOCAppDelegate sharedInstance].isProVersion) {
+        item = [[UIBarButtonItem alloc] initWithTitle:@"Upgrade" ...];
+    }
+    [self.navigationItem setRightBarButtonItem:item animated:animated];
+}
+					</code></pre>
+				</section>
+
+				<section>
+					<h2>Notification handling</h2>
+					<pre><code class="objectivec" data-trim>
+// Any ViewController with Upgrade references
+
+- (void)storeRefreshReceiptFinished:(NSNotification*)notification {
+    [self updateViewDependingOnProVersionStatusAnimated:YES];
+}
+
+- (void)storePaymentTransactionFinished:(NSNotification*)notification {
+    [self updateViewDependingOnProVersionStatusAnimated:YES];
+}
+
+- (void)storeRestoreTransactionsFinished:(NSNotification *)notification {
+    [self updateViewDependingOnProVersionStatusAnimated:YES];
+}
+					</code></pre>
+				</section>
+
+				<section>
+					<h1>Business aspects</h1>
+				</section>
+
+				<section>
+					<h2>Reasons</h2>
+					<ul>
+						<li><strike>Lack of demo versions</strike></li>
+						<li>Stagnating sales</li>
+						<li>Potentially bigger market</li>
+						<li>Kick it like GitHub</li>
+					</ul>
+
+					<aside class="notes">
+						<ul>
+							<li>GitHub's growth: 3.5 million users in April 2013</li>
+							<li>High price (at least in App Store terms)</li>
+							<li>About 95% of the Top Grossing charts</li>
+						</ul>
+					</aside>
+				</section>
+
+				<section>
+					<h2>Before</h2>
+					<img src="img/freemium/before.png" alt="Sales/downloads before the switch">
+					<p>266 paid sales/downloads &nbsp; &nbsp; &nbsp; &nbsp; 1397 EUR revenue</p>
+
+					<aside class="notes">
+						<p>Good baseline of how v2 was selling in general up to then</p>
+						<ul>
+							<li>Sales varying from 5 to 14</li>
+							<li>Averaging at around 9 sales per day</li>
+						</ul>
+					</aside>
+				</section>
+
+				<section>
+					<h2>After</h2>
+					<img src="img/freemium/after-sales.png" alt="Sales after the switch">
+					<p>217 paid sales &nbsp; &nbsp; &nbsp; &nbsp; 1110 EUR revenue</p>
+				</section>
+
+				<section>
+					<h2>After</h2>
+					<img src="img/freemium/after-downloads.png" alt="Downloads after the switch">
+					<p>6261 downloads</p>
+
+					<aside class="notes">
+						<ul>
+							<li>Freemium launch day = 2009 downloads</li>
+							<li>Now about 100 downloads per day</li>
+							<li>Shows that there is a bigger market</li>
+							<li>Conversion rate ~3.5%</li>
+						</ul>
+					</aside>
+				</section>
+
+				<section>
+					<h2>Low conversion rate</h2>
+					<p style="margin: 1em 0;">Right now missing out on potential customers</p>
+					<img src="img/freemium/tweet.png" alt="@dennisreimann must be crazy to give it away for free">
+
+					<aside class="notes">
+						<ul>
+							<li>Charge a low amount upfront?</li>
+							<li>The app is definitely valuable</li>
+							<li>Free -> Downloads</li>
+							<li>Paying twice does not work for me</li>
+							<li>Fits with GitHubs pricing</li>
+						</ul>
+					</aside>
+				</section>
+
+				<section>
+					<h2>Next steps</h2>
+					<ul>
+						<li>Improving conversions</li>
+						<li>Make upgrading more desirable for heavy users</li>
+						<li>Maybe cut off some features worth paying for</li>
+						<li>Try to upsell more efficiently</li>
+					</ul>
+				</section>
+
+				<section>
+					<img src="img/freemium/app-upgrade-01.png" class="full" alt="Root view">
+				</section>
+
+				<section>
+					<h1>Thank you!</h1>
+				</section>
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: false,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
