@@ -1,0 +1,599 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Elm – Funktionale Frontend-Entwicklung</title>
+  <meta name="description" content="Elm ist eine funktionale Programmiersprache, die zu JavaScript kompiliert. Eine Besonderheit ist dabei die statische Typisierung, welche es in JavaScript nicht gibt und die in Elm über den Compiler realisiert ist.">
+  <meta name="author" content="Dennis Reimann">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link rel="stylesheet" href="css/reveal.min.css">
+  <link rel="stylesheet" href="css/theme/dennisreimann.css" id="theme">
+  <link rel="stylesheet" href="lib/css/hopscotch.css">
+  <script>
+    document.write('<link rel="stylesheet" href="css/print/' + (window.location.search.match(/print-pdf/gi) ? 'pdf' : 'paper') + '.css" type="text/css" media="print">');
+  </script>
+  <!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+	<![endif]-->
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <section>
+        <section>
+          <h1>Elm</h1>
+          <img src="img/elm-ffe/elm-logo.png" class="title" alt="Elm Logo">
+          <h2>Funktionale<br>Frontend-Entwicklung</h2>
+          <p>
+            <small>
+							Webmontag Bremen &nbsp; - &nbsp; 21. November 2016<br>
+							<a href="https://dennisreimann.de">Dennis Reimann</a> &nbsp; - &nbsp; <a href="https://twitter.com/dennisreimann">@dennisreimann</a>
+						</small>
+          </p>
+          <aside class="notes">
+            <ul>
+              <li>Intro</li>
+              <li>UIEngineering</li>
+              <li>Frontend -> Elm</li>
+              <li>Bevor es los geht …</li>
+            </ul>
+          </aside>
+        </section>
+      </section>
+
+      <section>
+        <h1>Status Quo</h1>
+        <h2>Unterdessen in JavaScript-Land …</h2>
+        <aside class="notes">
+          <ul>
+            <li>Ein wenig Kontext</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section>
+        <h2>Was ist aktuell der heiße Shit?</h2>
+        <img src="img/elm-ffe/react-logo.svg" class="title fragment" alt="Elm Logo">
+        <aside class="notes">
+          <ul>
+            <li>React – das neue jQuery</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section>
+        <h2>Warum ist das so?</h2>
+        <ul>
+          <li>Komponenten: Reduktion der Komplexität</li>
+          <li>Deklaratives UI: Zustandslose Funktionen</li>
+          <li>Lösung für State Management: Flux Pattern</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Trend in Richtung<br>Funktionale Programmierung</h2>
+        <ul>
+          <li>Pure Functions</li>
+          <li>Immutability</li>
+          <li>Statische Typisierung</li>
+        </ul>
+        <aside class="notes">
+          <ul>
+            <li>Pure Functions: Arbeiten nur auf dem Input, keine Effekte!</li>
+            <li>Effekte: Operationen mit äußeren Zuständen</li>
+            <li>Testing und Refactoring</li>
+            <li>Immutability: Keine Variablen!</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section data-transition="none">
+        <h2 class="fragment" data-fragment-index="1">
+          <span class="npm">n</span>ew
+          <span class="npm">p</span>ackages
+          <span class="npm">m</span>onthly
+        </h2>
+        <ul class="left-right">
+          <li>Purity <span class="fragment additional additional--red" data-fragment-index="1">(native)</span></li>
+          <li>Functional Style <span class="fragment additional additional--red" data-fragment-index="1">Rambda</span></li>
+          <li>Immutability <span class="fragment additional additional--red" data-fragment-index="1">Immutable.js</span></li>
+          <li>Deklaratives UI <span class="fragment additional additional--red" data-fragment-index="1">React</span></li>
+          <li>State Management <span class="fragment additional additional--red" data-fragment-index="1">Redux</span></li>
+          <li>Statische Typisierung <span class="fragment additional additional--red" data-fragment-index="1">Flow / TypeScript</span></li>
+        </ul>
+        <aside class="notes">
+          <p>Wir wollen Apps in diesem Stil bauen:</p>
+          <p>Schauen wir uns mal um …</p>
+        </aside>
+      </section>
+
+      <section data-background-image="img/elm-ffe/js-vs-elm-1.jpg" data-background-size="contain" data-background-color="#2E3740">
+        <aside class="notes">
+          <ul>
+            <li>Historie und Legacy, Syntax: ES 2015</li>
+            <li>Nicht ursprünglich für diesen Zweck gedacht</li>
+            <li>In JS erfordert der funktionale Stil Disziplin</li>
+            <li>Es kann trotzdem was schief gehen</li>
+            <li>Kein Zwang oder Kontrolle</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section data-background-image="img/elm-ffe/js-vs-elm-2.jpg" data-background-size="contain" data-background-color="#2E3740">
+        <aside class="notes">
+          <p>Genau da kommt Elm ins Spiel</p>
+          <p><strong>Kein<br>JavaScript<br>Bashing</strong></p>
+        </aside>
+      </section>
+
+      <section>
+        <h2 style="margin-bottom:.5em"><img src="img/elm-ffe/elm-logo.png" class="title" style="position:relative;top:.125em;height:1em;margin:0 .125em 0 0" alt="Elm Logo"> Elm ist …</h2>
+        <ul>
+          <li>eine <strong>funktionale Programmiersprache</strong></li>
+          <li>für <strong>dynamische Web-Interfaces</strong></li>
+          <li><strong>statisch typisiert</strong></li>
+          <li><strong>JavaScript-basiert</strong></li>
+          <li>fokussiert auf <strong>Praktikabilität</strong></li>
+          <li><strong>Entwickler-freundlich</strong></li>
+        </ul>
+        <aside class="notes">
+          <ul>
+            <li>Pure Functions / Immutability</li>
+            <li>interoperabel mit JavaScript</li>
+            <li>Praktischer Einstieg in FP: für JS, nicht für Haskell</li>
+            <li>Keine esotherischen Konzepte – dennoch Lernkurve!</li>
+          </ul>
+          <p>Wesentliche Punkte:</p>
+          <ul>
+            <li>Compiler</li>
+            <li>Elm Architektur</li>
+            <li>Tooling</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section>
+        <h2>Compiler</h2>
+        <p>Das Herzstück von Elm</p>
+        <br>
+        <ul>
+          <li>
+            Statische Typisierung
+            <ul>
+              <li>Keine inkonsistente Variablentypen</li>
+              <li>Keine unsichere Referenzzugriffe</li>
+              <li><strong>Keine Laufzeitfehler</strong></li>
+            </ul>
+          </li>
+          <li>Zuverlässlichkeit &amp; Wartbarkeit</li>
+          <li>Unterstützt Entwickler</li>
+        </ul>
+        <small class="footnote">
+          <a href="http://elm-lang.org/blog/compilers-as-assistants" target="_blank">Compilers as assistants</a>
+        </small>
+        <aside class="notes">
+          <ul>
+            <li>"undefined is not a function"</li>
+            <li>Einfachere Refactorings gegenüber JS</li>
+            <li>Weniger Testing nötig</li>
+            <li>Entwicklung == Konversation mit dem Kompiler</li>
+            <li>"Wenn es kompiliert, funktioniert es auch"</li>
+            <li>Editor vs. Browser: Schnelleres und besseres Feedback</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section>
+        <h2>Fehlermeldungen</h2>
+        <br>
+        <img src="img/elm-ffe/error-type.png" class="full" alt="">
+        <aside class="notes">
+          <p>Typfehler</p>
+        </aside>
+      </section>
+
+      <section>
+        <img src="img/elm-ffe/error-typo.png" class="full" alt="">
+        <aside class="notes">
+          <p>Tippfehler</p>
+          <p>Weitere Beispiele für Unterstützung später bei Tooling</p>
+        </aside>
+      </section>
+
+      <section>
+        <h1>The Elm<br>Architecture</h1>
+      </section>
+
+      <section>
+        <h2>Die Applikation besteht aus …</h2>
+        <ul>
+          <li>Model: Beinhaltet den Zustand</li>
+          <li>View: Funktion, deren Input das Model ist</li>
+          <li>Update: Transformiert das Model</li>
+        </ul>
+        <small class="footnote">
+          <a href="drafts/elm-ffe-sample-app.html" target="tea-demo">Beispiel</a>
+        </small>
+        <aside class="notes">
+          <ul>
+            <li>Im Wesentlichen drei Teile – plus Runtime/Wiring.</li>
+            <li>Update: Die einzige Stelle, an der das Model bearbeitet wird</li>
+            <li>Es gibt nur diesen einen Weg</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section>
+        <h2>Model</h2>
+        <pre><code class="elm" data-trim><span class="hljs-keyword">type</span> <span class="hljs-keyword">alias</span> <span class="hljs-type">Model</span> =
+    { title : <span class="hljs-type">String</span>
+    , talks : <span class="hljs-type">List</span> <span class="hljs-type">Talk</span>
+    }
+
+
+<span class="hljs-keyword">type</span> <span class="hljs-keyword">alias</span> <span class="hljs-type">Talk</span> =
+    { title : <span class="hljs-type">String</span>
+    , speaker : <span class="hljs-type">String</span>
+    , description : <span class="hljs-type">Maybe</span> <span class="hljs-type">String</span>
+    , showDetails : <span class="hljs-type">Bool</span>
+    }</code></pre>
+        <aside class="notes">
+          <ul>
+            <li>Typdefinitionen</li>
+            <li>Maybe: Alles in Elm hat einen Typ (auch `null`)</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section>
+        <pre><code class="elm" data-trim><span class="hljs-title">initialModel</span> : <span class="hljs-type">Model</span>
+<span class="hljs-title">initialModel</span> =
+    { title = <span class="hljs-string">"Webmontag IV/2016"</span>
+    , talks = todaysTalks
+    }
+
+
+<span class="hljs-title">todaysTalks</span> : <span class="hljs-type">List</span> <span class="hljs-type">Talk</span>
+<span class="hljs-title">todaysTalks</span> =
+    [ { title = <span class="hljs-string">"Was, wie und warum - Die Gambio Shopsoftware"</span>
+      , speaker = <span class="hljs-string">"Lennard Kläfker und Daniel Wu"</span>
+      , description = (<span class="hljs-type">Just</span> <span class="hljs-string">"Die Geschichte unserer Software …"</span>)
+      , showDetails = <span class="hljs-type">False</span>
+      }
+    , { title = <span class="hljs-string">"Elm – Funktionale Frontend-Entwicklung"</span>
+      , speaker = <span class="hljs-string">"Dennis Reimann"</span>
+      , description = <span class="hljs-type">Nothing</span>
+      , showDetails = <span class="hljs-type">False</span>
+      }
+    ]</code></pre>
+      </section>
+
+      <section>
+        <h2>View</h2>
+        <pre><code class="elm" data-trim><span class="hljs-title">view</span> : <span class="hljs-type">Model</span> -&gt; <span class="hljs-type">Html</span> <span class="hljs-type">Msg</span>
+<span class="hljs-title">view</span> model =
+    div [ class <span class="hljs-string">"wrapper"</span> ]
+        [ h1 [ class <span class="hljs-string">"title"</span> ] [ text model.title ]
+        , ul [ class <span class="hljs-string">"talks"</span> ] (<span class="hljs-type">List</span>.map viewTalk model.talks)
+        ]
+
+
+<span class="hljs-title">viewTalk</span> : <span class="hljs-type">Talk</span> -&gt; <span class="hljs-type">Html</span> <span class="hljs-type">Msg</span>
+<span class="hljs-title">viewTalk</span> talk =
+    li
+        [ onClick (<span class="hljs-type">ToggleDetails</span> talk) ]
+        [ text talk.title
+        , div
+            [ hidden (not talk.showDetails) ]
+            [ text (talk.speaker ++ <span class="hljs-string">": "</span>)
+            , text (<span class="hljs-type">Maybe</span>.withDefault <span class="hljs-string">"keine Beschreibung"</span> talk.description)
+            ]
+        ]</code></pre>
+        <aside class="notes">
+          <ul>
+            <li>Virtual DOM</li>
+            <li>Performance: <a href="http://elm-lang.org/blog/blazing-fast-html-round-two" target="_blank">Etwa 50% schneller als React</a>
+              <ul>
+                <li>Unveränderbarkeit (Immutability)</li>
+                <li>keine Seiteneffekten (Purity)</li>
+              </ul>
+            </li>
+          </ul>
+        </aside>
+      </section>
+
+      <section>
+        <h2>Update</h2>
+        <pre><code class="elm" data-trim><span class="hljs-keyword">type</span> <span class="hljs-type">Msg</span>
+    = <span class="hljs-type">ToggleDetails</span> <span class="hljs-type">Talk</span>
+
+
+<span class="hljs-title">update</span> : <span class="hljs-type">Msg</span> -&gt; <span class="hljs-type">Model</span> -&gt; <span class="hljs-type">Model</span>
+<span class="hljs-title">update</span> msg model =
+    <span class="hljs-keyword">case</span> msg <span class="hljs-keyword">of</span>
+        <span class="hljs-type">ToggleDetails</span> talk -&gt;
+            <span class="hljs-keyword">let</span>
+                updateTalk t =
+                    <span class="hljs-keyword">if</span> t == talk <span class="hljs-keyword">then</span>
+                        { t | showDetails = (not talk.showDetails) }
+                    <span class="hljs-keyword">else</span>
+                        t
+            <span class="hljs-keyword">in</span>
+                { model | talks = <span class="hljs-type">List</span>.map updateTalk model.talks }
+</code></pre>
+        <aside class="notes">
+          <ul>
+            <li>Iterierung, Map vs. Zugriff auf Array</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section>
+        <h2>Boilerplate</h2>
+        <pre><code class="elm" data-trim><span class="hljs-keyword">module</span> Main <span class="hljs-keyword">exposing</span> (..)
+
+<span class="hljs-keyword">import</span> Html <span class="hljs-keyword">exposing</span> (..)
+<span class="hljs-keyword">import</span> Html.Events <span class="hljs-keyword">exposing</span> (onClick)
+<span class="hljs-keyword">import</span> Html.Attributes <span class="hljs-keyword">exposing</span> (class, hidden)
+
+
+<span class="hljs-title">main</span> : <span class="hljs-type">Program</span> <span class="hljs-type">Never</span> <span class="hljs-type">Model</span> <span class="hljs-type">Msg</span>
+<span class="hljs-title">main</span> =
+    <span class="hljs-type">Html</span>.beginnerProgram
+        { model = initialModel
+        , view = view
+        , update = update
+        }</code></pre>
+      </section>
+
+      <section>
+        <img src="img/elm-ffe/elm-arch.svg" class="full" alt="The Elm Architecture">
+        <aside class="notes">
+          <ul>
+            <li>Behandelt Effekte</li>
+            <li>Effekte als Daten: Bspw. AjAX</li>
+            <li>Effect Managers: Bspw. Websockets oder GraphQL</li>
+            <li>Runtime: JavaScript Interoperability</li>
+            <li>Only one way to do it</li>
+            <li>Skalierung und Modularität</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section>
+        <h1>Tooling</h1>
+      </section>
+
+      <section>
+        <h2>elm-package</h2>
+        <ul>
+          <li>Erzwingt Semantic Versioning</li>
+          <li>Breaking Changes erfordern Major Version Bump</li>
+          <li>Diffs von Versionen anzeigen</li>
+        </ul>
+        <small class="footnote">
+          <a href="http://elm-lang.org/blog/announce/package-manager" target="_blank">Elm Package Manager</a>
+        </small>
+        <aside class="notes">
+          <ul>
+            <li>NPM Äquivalent</li>
+            <li>elm-package erlaubt sonst kein publish</li>
+            <li>elm-package diff NoRedInk/elm-rails 2.0.0 3.0.0</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section>
+        <h2>elm-format</h2>
+        <ul>
+          <li>Formatiert Code entsprechend Community Standard</li>
+          <li>Keine Code Style-Debatten: Überall konsistent</li>
+          <li>Developer Experience:
+            <ul>
+              <li>Man findet sich direkt zurecht</li>
+              <li>Übernimmt Fleißarbeit beim Upgrade</li>
+            </ul>
+          </li>
+        </ul>
+        <aside class="notes">
+          <ul>
+            <li>Zusammenspiel mit TEA</li>
+            <li>Vergleich Rails: Convention over Configuration</li>
+          </ul>
+        </aside>
+      </section>
+
+      <!-- <section>
+        <h2>elm-test</h2>
+        <ul>
+          <li>Einfaches Setup für Unit und Fuzz Testing</li>
+          <li>Unit Tests: Einfach, da alles Pure Functions</li>
+          <li>Kein Mocking nötig: <a href="https://www.youtube.com/watch?v=6EdXaWfoslc" target="_blank">Effekte == Daten</a></li>
+          <li>Fuzz Tests: Generierte Funktionsargumente</li>
+        </ul>
+      </section> -->
+
+      <section>
+        <h2>elm-css</h2>
+        <ul>
+          <li>Funktionen die zu CSS kompilieren</li>
+          <li>Typsicher und vom Compiler gecheckt</li>
+          <li>Variablen und Mixins</li>
+        </ul>
+        <aside class="notes">
+          <ul>
+            <li>Nur verfügbare Properties</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section>
+        <img src="img/elm-ffe/elm-css.png" class="full" alt="elm-css">
+      </section>
+
+      <section>
+        <h2>Debugger</h2>
+        <ul>
+          <li>Export und Import für State und Event-Abläufe</li>
+          <li>Wiederholung, um Bugs zu reproduzieren</li>
+          <li>Zustand an jeder Stelle einsehbar</li>
+          <li><a href="http://elm-lang.org/assets/blog/0.18/todomvc.html" target="debugger-demo">Demo</a></li>
+        </ul>
+        <small class="footnote">
+          <a href="http://elm-lang.org/blog/the-perfect-bug-report" target="_blank">The Perfect Bug Report</a>
+        </small>
+        <aside class="notes">
+          <ul>
+            <li>Neu mit Elm 0.18</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section>
+        <h1>Elm lernen</h1>
+      </section>
+
+      <section>
+        <h2>Gotchas</h2>
+        <ul>
+          <li>Lernkurve:
+            <ul>
+              <li>Funktionale Programmierung, neue Paradigmen</li>
+              <li>Syntax und statische Typisierung</li>
+            </ul>
+          </li>
+          <li>Compiler erschwert Prototyping</li>
+          <li>Recht junges Ökosystem</li>
+          <li>(Noch) kein Server-Side Rendering</li>
+          <li>Keine Private Packages</li>
+        </ul>
+        <aside class="notes">
+          <ul>
+            <li>Standard-Library sehr klein: Kaum Lernaufwand</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section>
+        <h2>Was mag ich an Elm?</h2>
+        <ul>
+          <li>Es geht nicht um das was die Sprache bietet,<br>sondern um das, was sie weglässt</li>
+          <li>Elm Architektur: Einfache und solide Basis</li>
+          <li>Developer Experience: Best Practices eingebacken</li>
+          <li>Community und Ansatz, siehe <a href="https://www.youtube.com/watch?v=DSjbTC-hvqQ" target="_blank">Code is the easy part</a></li>
+        </ul>
+        <aside class="notes">
+          <h3>Developer Experience</h3>
+          <ul>
+            <li>One way to do it – extrem gut unterstützt</li>
+            <li>Testing einfach</li>
+          </ul>
+          <h3>Community und Approach</h3>
+          <ul>
+            <li>Moving fast</li>
+            <li>Focus: simplicity</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section>
+        <h2>Warum Elm?</h2>
+        <p>Selbst wenn man Elm nicht praktisch nutzt,<br>gibt es eine Menge daraus zu lernen!</p>
+        <br>
+        <ul>
+          <li>"It can't be unseen"</li>
+          <li>Elm macht dich zu einem besseren JavaScripter</li>
+          <li>Praktischer Einsteg in Funktionale Programmierung</li>
+        </ul>
+        <aside class="notes">
+          <ul>
+            <li>FP zunehmend wichtig</li>
+            <li>State Management ist eins der größten Probleme</li>
+            <li>Keine schnelleren CPUs, aber mehr Kerne: Immutability wichtig</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section>
+        <h2>Links</h2>
+        <ul>
+          <li><a href="http://courses.knowthen.com/p/elm-for-beginners" target="_blank">Elm for Beginners</a> (Videokurs)</li>
+          <li><a href="https://guide.elm-lang.org/" target="_blank">Elm Guide</a> (Praxisnahe Referenz)</li>
+          <li><a href="https://elmbridge.github.io/curriculum/" target="_blank">Elm Bridge</a> (Tutorial)</li>
+          <li><a href="https://www.manning.com/books/elm-in-action" target="_blank">Elm in Action</a> (Buch)</li>
+          <li><a href="http://elm-lang.org/blog/how-to-use-elm-at-work" target="_blank">How to use Elm at work</a> (Blogpost)</li>
+          <li><a href="https://dennisreimann.de/articles/elm.html" target="_blank">Elm: Funktionale Frontend-Entwicklung</a></li>
+        </ul>
+      </section>
+
+      <section>
+        <h1>Danke!</h1>
+        <br>
+        <p>dennisreimann.de/talks/elm.html</p>
+        <br>
+        <p>@dennisreimann</p>
+        <aside class="notes">
+          <ul>
+            <li>React: 135K (minified) / 43K (gzipped)</li>
+            <li>Elm: 80K / 25K</li>
+            <li>Vue: 63K / 23K</li>
+          </ul>
+          <p>UI engineering Podcast</p>
+        </aside>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="lib/js/head.min.js"></script>
+  <script src="js/reveal.min.js"></script>
+
+  <script>
+    // Full list of configuration options available here:
+    // https://github.com/hakimel/reveal.js#configuration
+    Reveal.initialize({
+      controls: false,
+      progress: true,
+      history: true,
+      center: true,
+
+      theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+      transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/fade/none
+      backgroundTransition: 'none',
+
+      // Optional libraries used to extend on reveal.js
+      dependencies: [{
+        src: 'lib/js/classList.js',
+        condition: function() {
+          return !document.body.classList;
+        }
+      }, {
+        src: 'plugin/markdown/marked.js',
+        condition: function() {
+          return !!document.querySelector('[data-markdown]');
+        }
+      }, {
+        src: 'plugin/markdown/markdown.js',
+        condition: function() {
+          return !!document.querySelector('[data-markdown]');
+        }
+      }, {
+        src: 'plugin/zoom-js/zoom.js',
+        async: true,
+        condition: function() {
+          return !!document.body.classList;
+        }
+      }, {
+        src: 'plugin/notes/notes.js',
+        async: true,
+        condition: function() {
+          return !!document.body.classList;
+        }
+      }]
+    });
+  </script>
+
+</body>
+</html>

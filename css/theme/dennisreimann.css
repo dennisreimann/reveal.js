@@ -1,8 +1,8 @@
-@import url(http://fonts.googleapis.com/css?family=Dosis:200,300,400,500,600,700,800);
-@import url(http://fonts.googleapis.com/css?family=Quicksand:400,700,400italic,700italic);
-@import url(http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700);
-@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900);
-@import url(http://fonts.googleapis.com/css?family=Raleway:400,100,200,300,500,600,700,800,900);
+@import url(//fonts.googleapis.com/css?family=Dosis:200,300,400,500,600,700,800);
+@import url(//fonts.googleapis.com/css?family=Quicksand:400,700,400italic,700italic);
+@import url(//fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700);
+@import url(//fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900);
+@import url(//fonts.googleapis.com/css?family=Raleway:400,100,200,300,500,600,700,800,900);
 
 /**
  * Custom theme for reveal.js, based on the sky theme.
@@ -55,8 +55,12 @@ body .reveal .pause-overlay {
 .reveal h1 {
   text-shadow: 0px 0px 6px rgba(0, 0, 0, 0.2); }
 
+.reveal h2 {
+  text-transform: initial; }
+
 .reveal ul,
-.reveal ol {
+.reveal ol,
+.reveal .definition {
   line-height: 1.6;
 }
 
@@ -102,6 +106,14 @@ body .reveal .pause-overlay {
   box-shadow: none;
   max-width: none;
   max-height: none; }
+
+.reveal section img.title {
+  margin: 1em 0;
+  background: none;
+  border: 0;
+  box-shadow: none;
+  max-width: none;
+  max-height: 25vh; }
 
 .reveal a:hover img {
   background: rgba(255, 255, 255, 0.2);
@@ -167,4 +179,35 @@ body .reveal .pause-overlay {
   -moz-transition: 1em;
   -ms-transition: 1em;
   -o-transition: 1em;
-  box-shadow: 0 0 6px rgba(0,0,0,.3); }
+  box-shadow: 0 0 6px rgba(0,0,0,.3);
+  max-height: none !important; }
+
+/*********************************************
+ * VARIOUS
+ *********************************************/
+
+ .reveal .additional {
+   color: #3b759e;
+ }
+
+ .reveal .additional--red {
+   color: #C12127;
+ }
+
+.reveal .left-right .additional {
+  float: right;
+  clear: right;
+  margin-left: 3em;
+}
+
+.reveal .npm {
+  color: white;
+  font-weight: bold;
+  text-shadow: 3px 3px 1px #C12127,3px -3px 1px #C12127,-3px 3px 1px #C12127,-3px -3px 1px #C12127;
+}
+
+.reveal .footnote {
+  display: block;
+  margin-top: 2.5em;
+  font-size: .8em;
+}
