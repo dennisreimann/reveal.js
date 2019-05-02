@@ -1,0 +1,670 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Lightning Network</title>
+  <meta name="author" content="Dennis Reimann">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link rel="stylesheet" href="css/reveal.min.css">
+  <link rel="stylesheet" href="css/theme/dennisreimann.css" id="theme">
+  <link rel="stylesheet" href="lib/css/hopscotch.css">
+  <script>
+    document.write('<link rel="stylesheet" href="css/print/' + (window.location.search.match(/print-pdf/gi) ? 'pdf' : 'paper') + '.css" type="text/css" media="print">');
+  </script>
+  <!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+	<![endif]-->
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <section>
+        <h1>Lightning<br>⚡️<br>Network</h1>
+        <p>
+          Hochschule Bremen
+          &nbsp;–&nbsp;
+          May 23, 2019
+        </p>
+        <p>
+          <a href="https://dennisreimann.de">Dennis Reimann</a>
+          &nbsp;–&nbsp;
+          <a href="https://twitter.com/dennisreimann">@dennisreimann</a>
+        </p>
+        <aside class="notes">
+          <ul>
+            <li>Freelance Software Developer from Bremen</li>
+            <li>Started tinkering with LN in 2018: Nice APIs, exciting field</li>
+            <li>Got into Bitcoin in 2017</li>
+            <li>Came for the tech, stayed for the sound money</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section>
+        <h1>In a nutshell</h1>
+        <ul class="emoji">
+          <li>🤓&nbsp; Second Layer Scaling Solution (for Bitcoin)</li>
+          <li class="fragment">🙂&nbsp; Faster transactions, lower fees</li>
+          <li class="fragment">🤔&nbsp; Network of Bidirectional Payment Channels</li>
+        </ul>
+        <aside class="notes">
+          <ul>
+            <li>Protocol: Not just Bitcoin, Litecoin also supported</li>
+            <li>Leveraging the underlying blockchain as a settlement layer</li>
+            <li>Goal: Enables quick, cheap and scalable Bitcoin payments</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section>
+        <h1>Why scale?</h1>
+        <ul class="emoji">
+          <li>📈&nbsp; Growing adoption and <a href="https://www.blockchain.com/charts/transactions-per-second?daysAverageString=7&timespan=1year">transaction rate</a></li>
+          <li class="fragment">😱&nbsp; Full blocks leading to <a href="https://coinmetrics.io/charts/#assets=btc_log=false_roll=14_left=averageFeeUsd_zoom=1499570155102.0408,1536513149387.7551">high fees</a></li>
+          <li class="fragment">💰&nbsp; Block space will be costly</li>
+          <li class="fragment">⏱&nbsp; Increasing transaction throughput</li>
+        </ul>
+        <aside class="notes">
+          <ul>
+            <li>Spike 2017: Payment "congestion"</li>
+            <li>Merchants would have to wait or carry the risk</li>
+            <li>Visa: 24,000tps, Bitcoin: 7tps</li>
+            <li>Mining: Rewards decrease → fees increase</li>
+          </ul>
+          <ul>
+            <li>On-chain scaling: Increasing block size, smaller transactions (SegWit, Schnorr)</li>
+            <li>Off-chain Approach: Keeping most transactions off of the blockchain</li>
+            <!-- <li>Other off-chain solutions: Liquid Sidechain</li> -->
+          </ul>
+        </aside>
+      </section>
+
+      <section>
+        <h1>A bit of history</h1>
+        <ul>
+          <li>2009: Very early draft of the idea in <a href="https://github.com/trottier/original-bitcoin/blob/master/src/main.cpp#L434">Bitcoin 0.1</a></li>
+          <li>2013: Mike Hearn <a href="https://lists.linuxfoundation.org/pipermail/bitcoin-dev/2013-April/002417.html">publishes Satoshis explanations</a></li>
+          <li>2015: <a href="https://lightning.network/lightning-network-paper.pdf">Lightning Network White paper</a> (Poon and Dryja)</li>
+          <li>2016: Developer gathering and protocol specification</li>
+          <li>2015-2017: First implementations and test transactions</li>
+          <li>2018: Start on mainnet, gaining mainstream momentum</li>
+          <li>2019: <a href="https://takethetorch.online/">Lightning Torch</a> / LN Trustchain</li>
+        </ul>
+        <small class="footnote">
+          Bitcoin Magazine: <a href="https://bitcoinmagazine.com/articles/history-lightning-brainstorm-beta/">The History of Lightning</a>
+        </small>
+        <aside class="notes">
+          <ul>
+            <li></li>
+          </ul>
+        </aside>
+      </section>
+
+      <section data-transition="fade">
+        <h3>January 2018</h3>
+        <img src="img/lightning-network/january-2018.png" alt="The Lightning Network Graph in January 2018" />
+      </section>
+
+      <section data-transition="fade">
+        <h3>February 2018</h3>
+        <img src="img/lightning-network/february-2018.png" alt="The Lightning Network Graph in February 2018" />
+      </section>
+
+      <section data-transition="fade">
+        <h3>December 2018</h3>
+        <img src="img/lightning-network/december-2018.png" alt="The Lightning Network Graph in December 2018" />
+      </section>
+
+      <section>
+        <h2>May 2019</h2>
+        <ul class="emoji">
+          <li>🖥&nbsp;
+            <strong>8,500 nodes</strong>
+            <ul>
+              <li>3,400 public nodes</li>
+              <li>4,300 with active channels</li>
+            </ul>
+          </li>
+          <li>🧮&nbsp; 36,500 channels overall</li>
+          <li>💰&nbsp; 1,000 BTC network capacity</li>
+        </ul>
+        <small class="footnote">Source: <a href="https://1ml.com/statistics">1ML Statistics</a></small>
+      </section>
+
+      <section>
+        <h1>Protocol Standard</h1>
+        <ul class="emoji">
+          <li>📃&nbsp; Specification: <a href="https://github.com/lightningnetwork/lightning-rfc">BOLT</a>s (Basis of Lightning Technology)</li>
+          <li>🛠&nbsp;
+            Multiple implementations:
+            <ul>
+              <li><a href="https://github.com/lightningnetwork/lnd">LND</a> by Lightning Labs (Go)</li>
+              <li><a href="https://github.com/ElementsProject/lightning">c-lightning</a> by Blockstream (C)</li>
+              <li><a href="https://github.com/ACINQ/eclair">Eclair</a> by ACINQ (Scala)</li>
+            </ul>
+          </li>
+        </ul>
+        <aside class="notes">
+          <ul>
+            <li>BOLTs are similar to BIPs</li>
+            <li>Promote interoperability across implementations</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section>
+        <h1>Channels</h1>
+        <h2>🖼&nbsp; Big Picture</h2>
+        <ul>
+          <li>Metaphor for state that is outside the blockchain</li>
+          <li>Assumption: Not every transaction needs the blockchain</li>
+          <li class="fragment" data-fragment-index="1">Two parties open a channel by commiting on-chain funds</li>
+          <li class="fragment" data-fragment-index="1">"Branch off the blockchain into the Lightning Network"</li>
+          <li class="fragment" data-fragment-index="2">Pay each other by updating a balance sheet
+            <ul>
+              <li>Instant: No waiting for block confirmations</li>
+              <li>No fees: No mining, just updating the balance</li>
+            </ul>
+          </li>
+          <li class="fragment" data-fragment-index="3">Done: Final balance is broadcasted to the blockchain</li>
+        </ul>
+        <aside class="notes">
+          <ul>
+            <li>No need to record every single transaction on the blockchain</li>
+            <li>Redistributions of the funds stored in the shared wallet</li>
+          </ul>
+          <ul>
+            <li>Use Case: Micropayments, small-value transactions</li>
+            <li>Premise: Channels are used rather often</li>
+            <li>Cost of opening and closing channels (on-chain transaction fees) are ammortized over the number of payments in that channel</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section>
+        <img src="img/lightning-network/payment-channel-lifecycle.svg" alt="The lifecycle of a payment channel" class="diagram" />
+        <aside class="notes">
+          <ul>
+            <li>Channel Lifecycle</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section data-transition="fade">
+        <img src="img/lightning-network/funding-transaction.svg" alt="Funding Transaction" class="diagram" />
+        <aside class="notes">
+          <ul>
+            <li>Creates and signs three transactions but only broadcasts one</li>
+            <li>Opening a channel = creating a mulitisig wallet</li>
+            <li>Funds are sent into a <strong>multisignature address</strong> controlled by both parties</li>
+            <li>Currently: Single-payer channel funding</li>
+            <li>In the Future: Funding by both parties</li>
+            <li>After sufficient confirmations, the channel is considered open</li>
+          </ul>
+          <ul>
+            <li>Commitment Transaction: "Balance sheet"</li>
+            <li>Signed by both peers, not published to the blockchain</li>
+            <li>Each peer stores its own Commitment Transactions</li>
+            <li>Later use in a possible future Closing Transaction</li>
+            <li>Hash is generated with the secret and exchanged</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section data-transition="fade">
+        <img src="img/lightning-network/commitment-transaction-1.svg" alt="Commitment Transaction" class="diagram" />
+        <aside class="notes">
+          <ul>
+            <li>Bob sends Alice an <strong>Invoice</strong> about 4 mBTC</li>
+            <li>Alice transfers the funds</li>
+            <li>Exchanges current hash and previous secret</li>
+            <li>Updates the Commitment Transaction</li>
+            <li>Revokes old Commitment Transaction</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section data-transition="fade">
+        <img src="img/lightning-network/commitment-transaction-2.svg" alt="Commitment Transaction" class="diagram" />
+        <aside class="notes">
+          <p>Bob sends Alice a 4 mBTC invoice, Alice pays.</p>
+          <ul>
+            <li>
+              Alice's state afterwards:
+              <ul>
+                <li>8 mBTC for Bob and</li>
+                <li>either: 2 mBTC for Alice after 1000 blocks</li>
+                <li>or: 2 mBTC for Bob if he knows Alice's secret</li>
+              </ul>
+            </li>
+          </ul>
+          <ul>
+            <li>
+              Bob's state afterwards:
+              <ul>
+                <li>2 mBTC for Alice and</li>
+                <li>either: 8 mBTC for Bob after 1000 blocks</li>
+                <li>or: 8 mBTC for Alice if she knows Bob's secret</li>
+              </ul>
+            </li>
+          </ul>
+        </aside>
+      </section>
+
+      <section data-transition="fade">
+        <img src="img/lightning-network/closing-transaction-mutual.svg" alt="Mutual Closing Transaction" class="diagram" />
+        <aside class="notes">
+          <ul>
+            <li>Best case: Cooperative close, happens immediately</li>
+            <li>The multisig wallet spends the funds back on-chain</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section data-transition="fade">
+        <img src="img/lightning-network/closing-transaction-forced.svg" alt="Forced Closing Transaction" class="diagram" />
+        <aside class="notes">
+          <ul>
+            <li>Unilateral close has a 1000 block wait time: ~7 days</li>
+            <li>Gives Alice the chance to come back and react</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section data-transition="fade">
+        <img src="img/lightning-network/closing-transaction-false.svg" alt="False Closing Transaction" class="diagram" />
+        <aside class="notes">
+          <ul>
+            <li>Might be intended or accidentally</li>
+            <li>Accidental: Incorrect channel state, restored from backup, implementation error</li>
+            <li>Intended: That's mean, you're a fraudster!</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section data-transition="fade">
+        <img src="img/lightning-network/closing-transaction-remedy.svg" alt="Breach Remedy Transaction" class="diagram" />
+        <aside class="notes">
+          <ul>
+            <li>Bob comes back and reveals the secret/revocation key for Alice's outdated transaction</li>
+            <li>Punishment: Fraud attempt results in seizure of funds</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section>
+        <h2>🕵️‍♂️&nbsp; Preventing fraud</h2>
+        <ul>
+          <li>Attempt: Close with an outdated version of the balance</li>
+          <li>
+            Security model different from on-chain:
+            <ul>
+              <li>Need to be online / Hot Wallet</li>
+              <li>Trust-minimization</li>
+              <li>
+                1000 block confirmation period / ~7 days
+                <br>
+                <em>(ensured by CSV timelock)</em>
+              </li>
+              <li>
+                Note: Revocation does not happen automatically!
+                <br>
+                <em>(observe for unilateraly closed channels, watchtowers)</em>
+              </li>
+            </ul>
+          </li>
+          <li>Punishment: Fraud detection results in seizure of funds</li>
+        </ul>
+        <aside class="notes">
+          <ul>
+            <li>Blockchain and miners don't know about the balance</li>
+            <li>Defrauding the current agreed-upon balance results in the complete seizure of funds by the liable party</li>
+            <li>Security is enforced by blockchain smart-contracts</li>
+            <li>CSV: CheckSequenceVerify – OP code introduced via soft fork</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section>
+        <h2>🔗&nbsp; On-Chain Relation</h2>
+        <ul>
+          <li>Locking up Bitcoin UTXOs into a multisignature output</li>
+          <li>Incremental mutation of a future on chain transaction</li>
+          <li class="fragment">
+            Differences to On-Chain transactions:
+            <ul>
+              <li>Peers need to be online to transact / Hot Wallet</li>
+              <li>Invoice/payment request is needed, no addresses</li>
+            </ul>
+          </li>
+          <li class="fragment">
+            Rely on the blockchain for final settlement of funds
+            <ul>
+              <li>Closing fee has to be reserved → changes balance</li>
+            </ul>
+          </li>
+          <li class="fragment">
+            Prerequisites:
+            <a href="https://en.bitcoin.it/wiki/Segregated_Witness">SegWit</a>
+            (fixes <a href="https://en.bitcoin.it/wiki/Transaction_malleability">malleability</a>),
+            CSV opcode
+          </li>
+        </ul>
+        <aside class="notes">
+          <ul>
+            <li>Transmission of signed but unbroadcast transactions</li>
+            <li>No proactive sending, yet</li>
+            <li>Creative ways and workarounds to do it:
+              <ul>
+                <li>Route Payment to yourself through peer and overpay the fee</li>
+                <li>Push on open</li>
+              </ul>
+            </li>
+          </ul>
+        </aside>
+      </section>
+
+      <section>
+        <h2>🧮&nbsp; Capacity and Liquidity</h2>
+        <ul>
+          <li>Channel capacity is fixed</li>
+          <li>Outbound and Inbound Liquidity</li>
+          <li class="fragment">
+            Funds are locked up in one direction:
+            <ul>
+              <li>
+                To make a payment, you need outbound liquidity
+                <br>
+                → funds on your side of the channel
+              </li>
+              <li>
+                To receive payments, you need inbound liquidity
+                <br>
+                → funds on the remote side of the channel
+              </li>
+              <li>This is a big <a href="https://blog.muun.com/the-inbound-capacity-problem-in-the-lightning-network/">adoption topic</a> currently.</li>
+            </ul>
+          </li>
+          <li class="fragment">Channels can be <a href="https://blog.muun.com/rebalancing-in-the-lightning-network/">rebalanced</a></li>
+        </ul>
+        <aside class="notes">
+          <ul>
+            <li>Analogy: Abacus or beads on a string</li>
+            <li>Merchants need inbound liquidity to receive</li>
+            <li>Services for that: Lightning Labs Loop, Bitrefill Thor, …</li>
+            <!-- <li>End users nodes mostly have outbound liquidity</li>
+            <li>Routing nodes have to rebalance</li>
+            <li>Rebalancing techniques: Splicing or sending a payment to your end</li> -->
+          </ul>
+        </aside>
+      </section>
+
+      <section>
+        <h2>🗺&nbsp; Routing</h2>
+        <ul>
+          <li>Finding a payment path for nodes that have no direct channel connection (multi hop payments)</li>
+          <li>
+            <a href="https://medium.com/coinmonks/specific-fee-routing-for-multi-path-payments-in-lightning-networks-b0e662c79819">Involves fees</a>: Node operators set Base Rate and Fee Rate
+            <br>
+            → cover the cost of locking up money in a channel
+          </li>
+          <li>
+            Constrained by capacity and liquidity along the path
+            <br>
+            → The longer the path, the more limited you will be
+          </li>
+          <li>Technically: <a href="https://en.bitcoin.it/wiki/Hash_Time_Locked_Contracts">Hash Time-Locked Contracts</a> (HTLC)</li>
+        </ul>
+        <aside class="notes">
+          <ul>
+            <li>Using the network graph</li>
+            <li>Advertised and non-advertised channels: Public and non-public</li>
+            <li>Requires reliable routing nodes to always be online</li>
+          </ul>
+          <ul>
+            <li>Fees: "Making money" by routing</li>
+            <li>Should cover the opportunity cost of having the money locked up in a channel</li>
+            <li>Base Fee: Fixed fee that every payment through this hop has to pay. Charged regardless of the amount being sent. The higher the amount, the lower the relative impact of the base fee.</li>
+            <li>Fee Rate: A percentage charged on the amount of the payment.</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section data-transition="fade">
+        <img src="img/lightning-network/routing-A-B-C-1.svg" alt="A has to go through B to send 4 to C." class="diagram" />
+
+        <aside class="notes">
+          <ul>
+            <li>A has to go through B to send 4 to C.</li>
+            <li>A-C does not have the required balance.</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section data-transition="fade">
+        <img src="img/lightning-network/routing-A-B-C-2.svg" alt="A sending through B changed the balance between B and C." class="diagram" />
+
+        <aside class="notes">
+          <ul>
+            <li>A sending through B changed the balance between B and C</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section>
+        <img src="img/lightning-network/routing-A-B-C-D-E.svg" alt="A cannot send 4 to E, because neither C-E nor D-E have the required balance." class="diagram" />
+
+        <aside class="notes">
+          <ul>
+            <li>A cannot send 4 to E</li>
+            <li>neither C-E nor D-E have the required balance.</li>
+            <li>AMP: Atomic Multi-Path Payments will help with that</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section>
+        <h1>In Practice</h1>
+        <h2>📱&nbsp; Wallets, Nodes, Apps</h2>
+        <aside class="notes">
+        </aside>
+      </section>
+
+      <section>
+        <h2 style="line-height:1.4;">👻 Custodial vs.&nbsp;&nbsp;&nbsp;&nbsp;<br>🦸‍♂️ Non-Custodial</h2>
+
+        <ul>
+          <li>
+            Custodial: Someone else manages your keys and funds.
+            <ul>
+              <li>Easy access, fast onboarding</li>
+              <li>Beware: Not your keys not your coins!</li>
+            </ul>
+          </li>
+          <li>
+            Non-custodial: You are holding the keys and funds.
+            <ul>
+              <li>Currently requires tech-familiarity</li>
+              <li>The UX and products are improving rapidly!</li>
+            </ul>
+          </li>
+        </ul>
+
+        <aside class="notes">
+          <p>First off …</p>
+        </aside>
+      </section>
+
+      <!---
+      <section>
+        <img src="img/lightning-network/communication.svg" alt="Client-Server Communication" class="diagram" />
+
+        <aside class="notes">
+          <ul>
+            <li>Client-Server communication</li>
+            <li>Need for a full node</li>
+          </ul>
+          <p>Icons made by <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a> from <a href="https://www.flaticon.com/" 			    title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" 			    title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></p>
+        </aside>
+      </section>
+    -->
+
+      <section>
+        <img src="img/lightning-network/wallets.png" alt="Lightning.app and Zap Mobile" class="diagram" />
+
+        <aside class="notes">
+          Wallets
+        </aside>
+      </section>
+
+      <section>
+        <img src="img/lightning-network/joule.png" alt="Joule Browser Extension" class="diagram" />
+
+        <aside class="notes">
+          Joule Browser Extension
+        </aside>
+      </section>
+
+      <section>
+        <img src="img/lightning-network/nodes.png" alt="Casa Node, RaspiBlitz and Nodl" class="diagram" />
+
+        <aside class="notes">
+          Nodes
+        </aside>
+      </section>
+
+      <section>
+        <img src="img/lightning-network/apps.png" alt="Lightning Apps" class="diagram" />
+
+        <aside class="notes">
+          Apps
+        </aside>
+      </section>
+
+      <section>
+        <h2>🍳&nbsp; What's Cookin'?</h2>
+        <ul>
+          <!-- <li>Neutrino: Privacy-Preserving Light Client</li> -->
+          <li>AMP: Atomic Multi-Path Payments</li>
+          <li>Dual Funded Channels</li>
+          <li>Autopilot: Automated channel creation</li>
+          <li><a href="https://www.youtube.com/watch?v=2tyr05tLF4g">Watchtowers</a>: Delegating channel breach detection</li>
+          <!-- <li>Splicing: Interacting between Channels and Blockchain</li> -->
+          <li>Unilateral/Push payments
+            <!-- <ul>
+              <li>Sphinx: Two-way communication with a client</li>
+            </ul> -->
+          </li>
+          <li>Cross-chain Atomic Swaps</li>
+        </ul>
+        <aside class="notes">
+          <ul>
+            <li>Watchtowers: Security feature for automating punishment</li>
+            <li>Push payments: Proactive or "permissionless" payments. No invoice required.</li>
+            <!--
+            <li>Neutrino: Sync filter headers instead of full chain</li>
+            <li>Splicing: increasing a channel’s capacity or taking money on-chain</li>
+            <li>Sphinx goes further: can help drive AMP route sharding, CoinJoin negotiations</li>
+            <li>Cross-chain atomic swaps: transfers of tokens between different blockchains</li>
+          -->
+          </ul>
+        </aside>
+      </section>
+
+      <section>
+        <h2>⚡️&nbsp; Lightning improves …</h2>
+        <ul class="emoji">
+          <li class="fragment">😎&nbsp; Privacy: Transactions are not public</li>
+          <li class="fragment">🤝&nbsp; Fungibility: Difficult to apply surveillance or blacklists</li>
+          <li class="fragment">🏎&nbsp; Speed: Transactions settle instantly</li>
+          <li class="fragment">🧩&nbsp; Granularity: Enables very small payments</li>
+          <li class="fragment">☄️&nbsp; Capacity: No upper limit to number of payments</li>
+        </ul>
+        <aside class="notes">
+          <ul>
+            <li>Quick Recap</li>
+            <li>Nevertheless: All of this is still in its infancy.</li>
+            <li>Still <strong>#reckless</strong> and subject to change.</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section>
+        <h1>⚡️ Thanks! ⚡️</h1>
+        <br>
+        <p>dennisreimann.de/talks/lightning-network.html</p>
+        <br>
+        <p>@dennisreimann</p>
+      </section>
+
+      <section>
+        <h1>Resources</h1>
+        <ul>
+          <li><a href="https://lightningwiki.net/">Lightning Wiki</a></li>
+          <li><a href="https://en.bitcoin.it/wiki/Lightning_Network">Bitcoin Wiki</a></li>
+          <li><a href="https://insights.coinhouse.com/lightning-network-technical-introduction/">Payment Channels and Security</a></li>
+          <li><a href="https://www.whatbitcoindid.com/lightning-network-special">What Bitcoin Did: Lightning Network Special</a> (Podcast)</li>
+          <li><a href="https://stephanlivera.com/episodes">Stephan Livera</a> (Podcast)</li>
+        </ul>
+        <aside class="notes">
+          <ul>
+            <li></li>
+          </ul>
+        </aside>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="lib/js/head.min.js"></script>
+  <script src="js/reveal.min.js"></script>
+
+  <script>
+    // Full list of configuration options available here:
+    // https://github.com/hakimel/reveal.js#configuration
+    Reveal.initialize({
+      controls: false,
+      progress: true,
+      history: true,
+      center: true,
+
+      theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+      transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/fade/none
+      backgroundTransition: 'none',
+
+      // Optional libraries used to extend on reveal.js
+      dependencies: [{
+        src: 'lib/js/classList.js',
+        condition: function() {
+          return !document.body.classList;
+        }
+      }, {
+        src: 'plugin/markdown/marked.js',
+        condition: function() {
+          return !!document.querySelector('[data-markdown]');
+        }
+      }, {
+        src: 'plugin/markdown/markdown.js',
+        condition: function() {
+          return !!document.querySelector('[data-markdown]');
+        }
+      }, {
+        src: 'plugin/zoom-js/zoom.js',
+        async: true,
+        condition: function() {
+          return !!document.body.classList;
+        }
+      }, {
+        src: 'plugin/notes/notes.js',
+        async: true,
+        condition: function() {
+          return !!document.body.classList;
+        }
+      }]
+    });
+  </script>
+
+</body>
+</html>

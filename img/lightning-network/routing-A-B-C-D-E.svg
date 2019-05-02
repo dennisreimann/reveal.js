@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1025px" height="541px" viewBox="0 0 1025 541" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 54.1 (76490) - https://sketchapp.com -->
+    <title>routing-A-B-C-D-E</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="routing-A-B-C-D-E" transform="translate(-38.000000, -25.000000)">
+            <g id="Node" transform="translate(925.000000, 200.000000)">
+                <g id="Endpoint" transform="translate(25.000000, 0.000000)">
+                    <circle id="Oval" stroke="#9B9B9B" stroke-width="3" fill="#E9E9E9" fill-rule="evenodd" cx="20" cy="20" r="20"></circle>
+                    <text id="Value" font-family="Verdana-Bold, Verdana" font-size="26" font-weight="bold" letter-spacing="-0.520000041" fill="#000000">
+                        <tspan x="11.0178125" y="30">8</tspan>
+                    </text>
+                </g>
+                <g id="Endpoint" transform="translate(0.000000, 79.000000)">
+                    <circle id="Oval" stroke="#9B9B9B" stroke-width="3" fill="#E9E9E9" fill-rule="evenodd" cx="20" cy="20" r="20"></circle>
+                    <text id="Value" font-family="Verdana-Bold, Verdana" font-size="26" font-weight="bold" letter-spacing="-0.520000041" fill="#000000">
+                        <tspan x="11.0178125" y="30">7</tspan>
+                    </text>
+                </g>
+                <polygon id="Polygon" stroke="#4A90E2" stroke-width="3" fill="#D6E9FE" fill-rule="evenodd" points="88 27 135.552826 61.5491503 117.389263 117.45085 58.6107374 117.45085 40.4471742 61.5491503"></polygon>
+                <text id="Name" font-family="MerriweatherSans-ExtraBold, Merriweather Sans" font-size="50" font-weight="600" letter-spacing="-0.999999583" fill="#000000">
+                    <tspan x="72.9970701" y="93">E</tspan>
+                </text>
+            </g>
+            <g id="Node" transform="translate(697.000000, 0.000000)">
+                <g id="Endpoint" transform="translate(0.000000, 79.000000)">
+                    <circle id="Oval" stroke="#9B9B9B" stroke-width="3" fill="#E9E9E9" fill-rule="evenodd" cx="20" cy="20" r="20"></circle>
+                    <text id="Value" font-family="Verdana-Bold, Verdana" font-size="26" font-weight="bold" letter-spacing="-0.520000041" fill="#000000">
+                        <tspan x="11.0178125" y="30">1</tspan>
+                    </text>
+                </g>
+                <g id="Endpoint" transform="translate(136.000000, 79.000000)">
+                    <circle id="Oval" stroke="#9B9B9B" stroke-width="3" fill="#E9E9E9" fill-rule="evenodd" cx="20" cy="20" r="20"></circle>
+                    <text id="Value" font-family="Verdana-Bold, Verdana" font-size="26" font-weight="bold" letter-spacing="-0.520000041" fill="#000000">
+                        <tspan x="11.0178125" y="30">2</tspan>
+                    </text>
+                </g>
+                <polygon id="Polygon" stroke="#4A90E2" stroke-width="3" fill="#D6E9FE" fill-rule="evenodd" points="88 27 135.552826 61.5491503 117.389263 117.45085 58.6107374 117.45085 40.4471742 61.5491503"></polygon>
+                <text id="Name" font-family="MerriweatherSans-ExtraBold, Merriweather Sans" font-size="50" font-weight="600" letter-spacing="-0.999999583" fill="#000000">
+                    <tspan x="69.444824" y="93">D</tspan>
+                </text>
+            </g>
+            <g id="Node" transform="translate(464.000000, 200.000000)">
+                <g id="Endpoint" transform="translate(25.000000, 0.000000)">
+                    <circle id="Oval" stroke="#9B9B9B" stroke-width="3" fill="#E9E9E9" fill-rule="evenodd" cx="20" cy="20" r="20"></circle>
+                    <text id="Value" font-family="Verdana-Bold, Verdana" font-size="26" font-weight="bold" letter-spacing="-0.520000041" fill="#000000">
+                        <tspan x="11.0178125" y="30">5</tspan>
+                    </text>
+                </g>
+                <g id="Endpoint" transform="translate(0.000000, 79.000000)">
+                    <circle id="Oval" stroke="#9B9B9B" stroke-width="3" fill="#E9E9E9" fill-rule="evenodd" cx="20" cy="20" r="20"></circle>
+                    <text id="Value" font-family="Verdana-Bold, Verdana" font-size="26" font-weight="bold" letter-spacing="-0.520000041" fill="#000000">
+                        <tspan x="11.0178125" y="30">2</tspan>
+                    </text>
+                </g>
+                <g id="Endpoint" transform="translate(136.000000, 79.000000)">
+                    <circle id="Oval" stroke="#9B9B9B" stroke-width="3" fill="#E9E9E9" fill-rule="evenodd" cx="20" cy="20" r="20"></circle>
+                    <text id="Value" font-family="Verdana-Bold, Verdana" font-size="26" font-weight="bold" letter-spacing="-0.520000041" fill="#000000">
+                        <tspan x="11.0178125" y="30">3</tspan>
+                    </text>
+                </g>
+                <g id="Endpoint" transform="translate(113.000000, 0.000000)">
+                    <circle id="Oval" stroke="#9B9B9B" stroke-width="3" fill="#E9E9E9" fill-rule="evenodd" cx="20" cy="20" r="20"></circle>
+                    <text id="Value" font-family="Verdana-Bold, Verdana" font-size="26" font-weight="bold" letter-spacing="-0.520000041" fill="#000000">
+                        <tspan x="11.0178125" y="30">9</tspan>
+                    </text>
+                </g>
+                <polygon id="Polygon" stroke="#4A90E2" stroke-width="3" fill="#D6E9FE" fill-rule="evenodd" points="88 27 135.552826 61.5491503 117.389263 117.45085 58.6107374 117.45085 40.4471742 61.5491503"></polygon>
+                <text id="Name" font-family="MerriweatherSans-ExtraBold, Merriweather Sans" font-size="50" font-weight="600" letter-spacing="-0.999999583" fill="#000000">
+                    <tspan x="72.557617" y="93">C</tspan>
+                </text>
+            </g>
+            <g id="Node" transform="translate(232.000000, 0.000000)">
+                <g id="Endpoint" transform="translate(0.000000, 79.000000)">
+                    <circle id="Oval" stroke="#9B9B9B" stroke-width="3" fill="#E9E9E9" fill-rule="evenodd" cx="20" cy="20" r="20"></circle>
+                    <text id="Value" font-family="Verdana-Bold, Verdana" font-size="26" font-weight="bold" letter-spacing="-0.520000041" fill="#000000">
+                        <tspan x="11.0178125" y="30">4</tspan>
+                    </text>
+                </g>
+                <g id="Endpoint" transform="translate(136.000000, 79.000000)">
+                    <circle id="Oval" stroke="#9B9B9B" stroke-width="3" fill="#E9E9E9" fill-rule="evenodd" cx="20" cy="20" r="20"></circle>
+                    <text id="Value" font-family="Verdana-Bold, Verdana" font-size="26" font-weight="bold" letter-spacing="-0.520000041" fill="#000000">
+                        <tspan x="11.0178125" y="30">5</tspan>
+                    </text>
+                </g>
+                <polygon id="Polygon" stroke="#4A90E2" stroke-width="3" fill="#D6E9FE" fill-rule="evenodd" points="88 27 135.552826 61.5491503 117.389263 117.45085 58.6107374 117.45085 40.4471742 61.5491503"></polygon>
+                <text id="Name" font-family="MerriweatherSans-ExtraBold, Merriweather Sans" font-size="50" font-weight="600" letter-spacing="-0.999999583" fill="#000000">
+                    <tspan x="70.6533201" y="93">B</tspan>
+                </text>
+            </g>
+            <g id="Node" transform="translate(0.000000, 200.000000)">
+                <g id="Endpoint" transform="translate(136.000000, 79.000000)">
+                    <circle id="Oval" stroke="#9B9B9B" stroke-width="3" fill="#E9E9E9" fill-rule="evenodd" cx="20" cy="20" r="20"></circle>
+                    <text id="Value" font-family="Verdana-Bold, Verdana" font-size="26" font-weight="bold" letter-spacing="-0.520000041" fill="#000000">
+                        <tspan x="11.0178125" y="30">8</tspan>
+                    </text>
+                </g>
+                <g id="Endpoint" transform="translate(113.000000, 0.000000)">
+                    <circle id="Oval" stroke="#9B9B9B" stroke-width="3" fill="#E9E9E9" fill-rule="evenodd" cx="20" cy="20" r="20"></circle>
+                    <text id="Value" font-family="Verdana-Bold, Verdana" font-size="26" font-weight="bold" letter-spacing="-0.520000041" fill="#000000">
+                        <tspan x="11.0178125" y="30">6</tspan>
+                    </text>
+                </g>
+                <polygon id="Polygon" stroke="#4A90E2" stroke-width="3" fill="#D6E9FE" fill-rule="evenodd" points="88 27 135.552826 61.5491503 117.389263 117.45085 58.6107374 117.45085 40.4471742 61.5491503"></polygon>
+                <text id="Name" font-family="MerriweatherSans-ExtraBold, Merriweather Sans" font-size="50" font-weight="600" letter-spacing="-0.999999583" fill="#000000">
+                    <tspan x="70.6777342" y="93">A</tspan>
+                </text>
+            </g>
+            <path d="M153.5,198.5 L231,121" id="Line-5" stroke="#7ED321" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M186.5,300.5 L452.894531,300.5" id="Line-5" stroke="#7ED321" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M649.5,300.5 L915.894531,300.5" id="Line-5" stroke="#D0021B" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M409.5,198.5 L487,121" id="Line-5" stroke="#7ED321" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" transform="translate(448.000000, 160.000000) scale(1, -1) translate(-448.000000, -160.000000) "></path>
+            <path d="M617.5,198.5 L695,121" id="Line-5" stroke="#7ED321" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M873.5,198.5 L951,121" id="Line-5" stroke="#FF0000" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" transform="translate(912.000000, 160.000000) scale(1, -1) translate(-912.000000, -160.000000) "></path>
+            <text id="A-cannot-send-4-to-E" font-family="MerriweatherSans-Book, Merriweather Sans" font-size="36" font-weight="300" line-spacing="50" letter-spacing="-0.666666687" fill="#000000">
+                <tspan x="299.839519" y="454">A cannot send 4 to E, because </tspan>
+                <tspan x="374.719401" y="504">neither C-E  nor D-E </tspan>
+                <tspan x="329.785808" y="554">have the required balance.</tspan>
+            </text>
+        </g>
+    </g>
+</svg>
