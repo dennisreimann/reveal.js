@@ -1,5 +1,5 @@
-@import url(//fonts.googleapis.com/css?family=Inconsolata:400,700,400italic,700italic);
-@import url(//fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700);
+@import url("//fonts.googleapis.com/css?family=Inconsolata:400,700");
+@import url("//fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700");
 
 :root {
   --color-neutral-10: #f2f4f5;
@@ -35,7 +35,7 @@ body {
 }
 
 .reveal {
-  font-family: Avenir, "Open Sans", sans-serif;
+  font-family: "Open Sans", sans-serif;
   line-height: 1.6;
   font-size: 36px;
   letter-spacing: -0.02em; }
@@ -92,44 +92,14 @@ body {
  * IMAGES
  *********************************************/
 .reveal section img {
-  margin: 15px 0px;
-  background: rgba(255, 255, 255, 0.12);
-  border: 2px solid #333333;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
   -webkit-transition: all .2s linear;
   -moz-transition: all .2s linear;
   -ms-transition: all .2s linear;
   -o-transition: all .2s linear;
   transition: all .2s linear; }
 
-.reveal section img.full {
-  background: none;
-  border: 0;
-  box-shadow: none;
-  max-width: none;
-  max-height: none; }
-
 .reveal section img.diagram {
-  margin: 0;
-  background: none;
-  border: 0;
-  box-shadow: none;
-  max-width: none;
-  max-height: none;
   width: 100%; }
-
-.reveal section img.title {
-  margin: 1em 0;
-  background: none;
-  border: 0;
-  box-shadow: none;
-  max-width: none;
-  max-height: 25vh; }
-
-.reveal a:hover img {
-  background: rgba(255, 255, 255, 0.2);
-  border-color: var(--color-accent);
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.55); }
 
 /*********************************************
  * NAVIGATION CONTROLS
@@ -198,8 +168,21 @@ body {
  *********************************************/
 
 .reveal blockquote {
+  position: relative;
   font-size: var(--font-size-l);
   line-height: 1.1;
+ }
+.reveal blockquote:before {
+  position: absolute;
+  top: -.39em;
+  left: calc(50% - 1em);
+  z-index: -1;
+  display: inline-block;
+  font-family: "Inconsolata";
+  font-weight: 700;
+  font-size: 8em;
+  content: '“';
+  color: var(--color-neutral-80);
  }
 
 .reveal .secondary,
